@@ -1,0 +1,52 @@
+version: "3"
+
+volumes:
+  chat_local_postgres_data: {}
+  chat_local_postgres_data_backups: {}
+  django_media: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    image: chat_local_django
+    container_name: chat_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.django
+      - ./.envs/.postgres
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: chat_production_postgres
+    container_name: chat_local_postgres
+    volumes:
+      - chat_local_postgres_data:/var/lib/postgresql/data
+      - chat_local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.postgres
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    image: django_nginx
+    container_name: chat_django_nginx
+    restart: always
+    depends_on:
+      - django
+    ports:
+      - "80:80"
+    volumes:
+      - django_media:/usr/src/app
