@@ -24,3 +24,8 @@ urlpatterns += [
         name="api-docs",
     ),
 ]
+
+# API patterns for Local Apps
+urlpatterns += [
+    path(f"{settings.API_PREFIX}users/", include("apps.users.api.urls")),
+]
