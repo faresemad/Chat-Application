@@ -10,7 +10,7 @@ class Room(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='room_admin')
     name = models.CharField(max_length=100)
-    members = models.ManyToManyField(User, related_name='rooms')
+    members = models.ManyToManyField(User, related_name='rooms', blank=True)
 
     def __str__(self):
         return self.name
