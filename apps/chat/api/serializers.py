@@ -6,7 +6,7 @@ from apps.chat.models import Message, Room
 User = get_user_model()
 
 
-class UserSerializer(serializers.ModelSerializer):
+class BaseUserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
 
     class Meta:
@@ -17,6 +17,14 @@ class UserSerializer(serializers.ModelSerializer):
         return f"{obj.first_name} {obj.last_name}"
 
 
+class UserSerializer(BaseUserSerializer):
+    pass
+
+
+class MemberSerializer(BaseUserSerializer):
+    pass
+
+
 class RoomCUDSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
@@ -25,12 +33,19 @@ class RoomCUDSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RoomGETSerializer(serializers.ModelSerializer):
+class RoomRetrieveSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    members = MemberSerializer(many=True, read_only=True)
 
     class Meta:
         model = Room
         fields = '__all__'
+
+
+class RoomListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ["id", "name"]
 
 
 class MessageSerializer(serializers.ModelSerializer):
