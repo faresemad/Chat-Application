@@ -8,20 +8,21 @@ User = get_user_model()
 
 class Room(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='room_admin')
     name = models.CharField(max_length=100)
-    online = models.ManyToManyField(User, related_name='rooms')
+    members = models.ManyToManyField(User, related_name='rooms')
 
     def __str__(self):
         return self.name
 
-    def get_online_count(self):
-        return self.online.count()
+    def get_members_count(self):
+        return self.members.count()
 
     def join_room(self, user):
-        self.online.add(user)
+        self.members.add(user)
 
     def leave_room(self, user):
-        self.online.remove(user)
+        self.members.remove(user)
 
 
 class Message(models.Model):
