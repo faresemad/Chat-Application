@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
 
 from apps.chat.api.serializers import MessageSerializer, RoomCUDSerializer, RoomListSerializer, RoomRetrieveSerializer
@@ -26,7 +26,7 @@ class RoomViewSet(viewsets.ModelViewSet):
         return RoomRetrieveSerializer
 
 
-class MessageViewSet(viewsets.ModelViewSet):
+class MessageViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
