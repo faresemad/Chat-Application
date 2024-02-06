@@ -11,3 +11,6 @@ ALLOWED_HOSTS=127.0.0.1,0.0.0.0,localhost
 CELERY_BROKER=redis://redis:6379/0
 CELERY_BACKEND=redis://redis:6379/0
 ADMIN_URL=admin/
+REDIS_URL=redis://redis:6379/0
+REDIS_HOST=redis
+REDIS_PORT=6379
