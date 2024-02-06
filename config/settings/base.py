@@ -12,6 +12,7 @@ DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",  # Daphne must be listed before django.contrib.staticfiles
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
@@ -24,7 +25,6 @@ THIRD_PARTY_APPS = [
     "djoser",
     "drf_spectacular",
     "django_filters",
-    "channels",
 ]
 
 LOCAL_APPS = [
