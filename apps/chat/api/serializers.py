@@ -30,7 +30,7 @@ class RoomCUDSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = '__all__'
+        fields = "__all__"
 
 
 class RoomRetrieveSerializer(serializers.ModelSerializer):
@@ -39,7 +39,7 @@ class RoomRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = '__all__'
+        fields = "__all__"
 
 
 class RoomListSerializer(serializers.ModelSerializer):
@@ -51,4 +51,4 @@ class RoomListSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = "__all__"
