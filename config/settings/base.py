@@ -176,10 +176,8 @@ RESET_PASS_CONFIRM_URL = "users/reset_password_confirm/"
 
 # Channels Layer
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(env.str("REDIS_HOST"), env.int("REDIS_PORT"))]
-        },
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {"hosts": [(env.str("REDIS_HOST"), env.int("REDIS_PORT"))]},
     },
 }

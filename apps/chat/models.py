@@ -8,9 +8,9 @@ User = get_user_model()
 
 class Room(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='room_admin')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="room_admin")
     name = models.CharField(max_length=100)
-    members = models.ManyToManyField(User, related_name='rooms', blank=True)
+    members = models.ManyToManyField(User, related_name="rooms", blank=True)
 
     def __str__(self):
         return self.name
@@ -27,8 +27,8 @@ class Room(models.Model):
 
 class Message(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='messages')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="messages")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="messages")
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
