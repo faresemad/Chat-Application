@@ -1,15 +1,17 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
 
-from apps.chat.api.serializers import MessageSerializer, RoomCUDSerializer, RoomGETSerializer
+from apps.chat.api.serializers import MessageSerializer, RoomCUDSerializer, RoomListSerializer, RoomRetrieveSerializer
 from apps.chat.models import Message, Room
 from apps.utils.permissions import IsOwnerOrReadOnly
 
 
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
-    serializer_class = RoomGETSerializer
+    serializer_class = RoomRetrieveSerializer
     permission_classes = [IsAuthenticated]
+    lookup_field = "id"
+    lookup_url_kwarg = "room_id"
 
     def get_permissions(self):
         if self.action in ["update", "partial_update", "destroy"]:
@@ -21,10 +23,12 @@ class RoomViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update", "destroy"]:
             return RoomCUDSerializer
-        return RoomGETSerializer
+        elif self.action in ["list"]:
+            return RoomListSerializer
+        return RoomRetrieveSerializer
 
 
-class MessageViewSet(viewsets.ModelViewSet):
+class MessageViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 

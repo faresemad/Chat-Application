@@ -51,3 +51,12 @@ command:
 
 swagger:
 	docker-compose -f $(COMPOSE_FILE) run --rm django python manage.py spectacular --file schema.yaml --validate --fail-on-warn
+
+get-backup:
+	docker-compose -f $(COMPOSE_FILE) exec db pg_dump -U postgres -d postgres > backup.sql
+
+set-backup:
+	docker-compose -f $(COMPOSE_FILE) exec db psql -U postgres -d postgres < backup.sql
+
+get-media-files:
+	docker cp $(shell docker-compose -f $(COMPOSE_FILE) ps -q django):/app/media/ .
