@@ -10,6 +10,8 @@ class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomRetrieveSerializer
     permission_classes = [IsAuthenticated]
+    lookup_field = "id"
+    lookup_url_kwarg = "room_id"
 
     def get_permissions(self):
         if self.action in ["update", "partial_update", "destroy"]:
