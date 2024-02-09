@@ -33,4 +33,4 @@ class MessageViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.Ge
     serializer_class = MessageSerializer
 
     def get_queryset(self):
-        return self.queryset.filter(room_id=self.kwargs.get("room_pk"))
+        return self.queryset.filter(room_id=self.kwargs.get("room_id"))
